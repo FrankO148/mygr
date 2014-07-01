@@ -50,6 +50,10 @@ class Proceso < ActiveRecord::Base
 		arr.last
 	end
 
+	def self.find_by_priority(priority)
+		processes=Proceso.createAllPr.select {|process| process.pri==priority}
+	end
+
 	def self.kill(pid)
 		system("kill -9 #{pid}")
 	end	
@@ -71,6 +75,7 @@ class Proceso < ActiveRecord::Base
        		rss: proceso.rss,
        		tty: proceso.tty,
        		stat: proceso.stat,
+       		ni:proceso.pri,
        		start: proceso.start,
        		time: proceso.time,
        		command: proceso.tree}
@@ -86,6 +91,7 @@ class Proceso < ActiveRecord::Base
        		rss: proceso.rss,
        		tty: proceso.tty,
        		stat: proceso.stat,
+       		ni:proceso.pri,
        		start: proceso.start,
        		time: proceso.time,
        		command: proceso.tree}

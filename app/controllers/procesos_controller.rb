@@ -1,6 +1,6 @@
 class ProcesosController < ApplicationController
   require 'json'
-  before_action :check_priority, only: [:prioritize]
+  before_action :check_priority, only: [:prioritize,:list_by_priority]
   before_action :check_pid, only: [:prioritize,:kill]  
   # GET /procesos
   # GET /procesos.json
@@ -63,13 +63,22 @@ class ProcesosController < ApplicationController
     if @children 
       render json: Proceso.AllPr_To_Hash(@children), status: :ok
     else
-      head :no_content
+      head :not_found
     end
   end
 
   def list_pr
     @procesos=Proceso.createAllPr
     render json: Proceso.AllPr_To_Hash(@procesos) 
+  end
+
+  def list_by_priority
+    @processes_with_same_priority=Proceso.find_by_priority(params[:pri])
+    if @processes_with_same_priority
+      render json: Proceso.AllPr_To_Hash(@processes_with_same_priority), status: :ok
+    else
+      head :not_found  
+    end
   end
 
   def kill
@@ -96,10 +105,15 @@ class ProcesosController < ApplicationController
   end
 
   def check_priority
-    puts params[:process][:pri]
-    unless  /\A(0|((\+|\-)([1-9]|1[0-9]))|\-20)\z/.match("#{params[:process][:pri]}")
-      head :not_found
-    end
+    if defined? params[:process][:pri]
+      unless  /\A(0|((\+|\-)([1-9]|1[0-9]))|\-20)\z/.match("#{params[:process][:pri]}")
+        head :not_found
+      end
+    elsif defined? params[:pri]
+      unless  /\A(0|((\+|\-)([1-9]|1[0-9]))|\-20)\z/.match("#{params[:pri]}")
+        head :not_found
+      end
+    end  
   end
 
 end

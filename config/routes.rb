@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/processes/' => 'procesos#list_pr'
   get '/processes/:pid' => 'procesos#show_pr'
   get '/processes/:pid/children'=> 'procesos#show_children'
+  get '/processes/priority/:pri'=> 'procesos#list_by_priority'
   delete '/processes/:pid' => 'procesos#kill'
   put '/processes/:pid' => 'procesos#prioritize'
   post '/processes/' => 'procesos#create_pr'
