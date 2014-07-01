@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: MyString
+  pid: MyString
+  p_cpu: MyString
+  p_mem: MyString
+  vsz: MyString
+  tty: MyString
+  stat: MyString
+  start: MyString
+  time: MyString
+  command: MyString
+
+two:
+  user: MyString
+  pid: MyString
+  p_cpu: MyString
+  p_mem: MyString
+  vsz: MyString
+  tty: MyString
+  stat: MyString
+  start: MyString
+  time: MyString
+  command: MyString
