@@ -9,6 +9,7 @@ class ProcesosController < ApplicationController
 
     render json: @procesos
   end
+  
 
   # GET /procesos/1
   # GET /procesos/1.json
