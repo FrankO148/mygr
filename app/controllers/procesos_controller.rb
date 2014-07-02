@@ -21,24 +21,7 @@ class ProcesosController < ApplicationController
 
   # PATCH/PUT /procesos/1
   # PATCH/PUT /procesos/1.json
-  def update
-    @proceso = Proceso.find(params[:id])
-
-    if @proceso.update(params[:proceso])
-      head :no_content
-    else
-      render json: @proceso.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /procesos/1
-  def destroy
-    @proceso = Proceso.find(params[:id])
-    @proceso.destroy
-
-    head :no_content
-  end
-
+  
   def create_pr
     @proceso = Proceso.create_pr(params[:process][:command])
 
