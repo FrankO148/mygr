@@ -55,11 +55,11 @@ class Proceso < ActiveRecord::Base
 	end
 
 	def self.kill(pid)
-		system("kill -9 #{pid}")
+		system("sudo kill -9 #{pid}")
 	end	
 
 	def self.prioritize(pid,priority)
-		if system("renice #{priority} #{pid}")
+		if system("sudo renice #{priority} #{pid}")
 			return Proceso.find(pid)
 		else
 			return false
