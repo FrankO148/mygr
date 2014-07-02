@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   delete '/processes/:pid' => 'procesos#kill'
   put '/processes/:pid' => 'procesos#prioritize'
   post '/processes/' => 'procesos#create_pr'
+  match "*path", to: "application#catch_404", via: :all
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
