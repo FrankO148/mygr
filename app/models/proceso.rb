@@ -25,7 +25,7 @@ class Proceso < ActiveRecord::Base
 		raw_data = ` ps xao user,pid,%cpu,%mem,vsz,rss,stat,tty,start,time,ni,ppid,command --width 1000 --no-headers`.split("\n")
 		raw_data.each do |line_data|
 			pr_data=line_data.split(" ")
-			if pr_data.length == 13
+			if pr_data[8].length == 8
 				arr_procesos << Proceso.new({user: pr_data[0],
 									pid: pr_data[1],
 									p_cpu: pr_data[2],
