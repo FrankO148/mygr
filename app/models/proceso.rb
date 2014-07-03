@@ -25,6 +25,7 @@ class Proceso < ActiveRecord::Base
 		raw_data = ` ps xao user,pid,%cpu,%mem,vsz,rss,stat,tty,start,time,ni,ppid,command --width 1000 --no-headers`.split("\n")
 		raw_data.each do |line_data|
 			pr_data=line_data.split(" ")
+			if pr_data.length == 13
 				arr_procesos << Proceso.new({user: pr_data[0],
 									pid: pr_data[1],
 									p_cpu: pr_data[2],
@@ -39,7 +40,24 @@ class Proceso < ActiveRecord::Base
 									command: pr_data[12],
 									pprocess: arr_procesos.select{|process| process.pid==pr_data[11]}.last})
 				current_process=arr_procesos.select{|process| process.pid==pr_data[1]}.last
-				current_process.tree= Proceso.generate_tree(pr_data[1],arr_procesos)			
+				current_process.tree= Proceso.generate_tree(pr_data[1],arr_procesos)
+			else
+				arr_procesos << Proceso.new({user: pr_data[0],
+									pid: pr_data[1],
+									p_cpu: pr_data[2],
+									p_mem: pr_data[3],
+									vsz: pr_data[4],
+									rss: pr_data[5],
+									stat: pr_data[6],
+									tty: pr_data[7],
+									start: pr_data[8]+" "+pr_data[9] ,
+									time: pr_data[10],
+									pri: pr_data[11],
+									command: pr_data[13],
+									pprocess: arr_procesos.select{|process| process.pid==pr_data[12]}.last})
+				current_process=arr_procesos.select{|process| process.pid==pr_data[1]}.last
+				current_process.tree= Proceso.generate_tree(pr_data[1],arr_procesos)
+			end				
 		end
 
 		return arr_procesos	
